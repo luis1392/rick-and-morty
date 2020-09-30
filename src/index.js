@@ -8,14 +8,23 @@ import { BrowserRouter } from "react-router-dom";
 
 import * as serviceWorker from "./serviceWorker";
 
+// add lib css
 import "bootstrap/dist/css/bootstrap.css";
 import "animate.css";
 
+// Redux
+import { Provider } from "react-redux";
+import makeStore from "./redux/makeStore";
+
+const store = makeStore();
+
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
