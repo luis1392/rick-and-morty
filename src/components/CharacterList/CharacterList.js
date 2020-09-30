@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
 import Loader from "../Loader";
+import CharacterItem from "../CharacterItem";
 
 import { Row, Col } from "../../styles/Grid";
 
-import CharacterItem from "../CharacterItem";
-import { connect } from "react-redux";
-import * as characterActions from "../../redux/actions/characterActions";
+import { connect } from "react-redux"; //redux
+import * as characterActions from "../../redux/actions/characterActions"; //actions redux
 
 const CharacterList = (props) => {
   const { response, errors, mesages, loading } = useFetch(
-    "/character?name=rick"
+    `/character${
+      props.searchReducer.search ? `?name=${props.searchReducer.search}` : ""
+    }`
   );
 
   useEffect(() => {
@@ -22,7 +24,6 @@ const CharacterList = (props) => {
   if (loading) {
     return <Loader text="Cargando información" />;
   }
-  // ?page=2
 
   if (response === null) {
     return null;
@@ -30,7 +31,6 @@ const CharacterList = (props) => {
   if (errors) {
     return <div>{mesages}</div>;
   }
-
   const renderCharacterList = (characters) => {
     // Generate character item.
     const character = characters.map((element) => {
@@ -45,15 +45,14 @@ const CharacterList = (props) => {
   return <Row>{renderCharacterList(props.characterReducer.characters)}</Row>;
 };
 
-const mapStateToProps = ({ characterReducer }) => {
+const mapStateToProps = ({ characterReducer, searchReducer }) => {
   return {
     characterReducer,
+    searchReducer,
   };
 };
 const actions = {
-  fetchCharactersBegin: characterActions.fetchCharactersBegin,
   fetchCheractersSuccess: characterActions.fetchCheractersSuccess,
-  fetchCheractersError: characterActions.fetchCheractersError,
 };
 // export default CharacterList;
 export default connect(mapStateToProps, actions)(CharacterList);
