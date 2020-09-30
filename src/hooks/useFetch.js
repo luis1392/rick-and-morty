@@ -27,7 +27,6 @@ const useFetch = (url) => {
     //  Controller and headers declaration.
     const controller = new AbortController();
     const signal = controller.signal;
-
     const headers = {
       method: "GET",
       headers: {
