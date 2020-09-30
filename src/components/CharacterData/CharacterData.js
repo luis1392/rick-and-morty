@@ -29,7 +29,7 @@ const CharacterData = (props) => {
   return (
     <Row>
       <Col xl="12" lg="12" md="12" sm="12">
-        <H1 className="card-title">{name}</H1>
+        <H1 className="card-title animate__animated animate__bounce">{name}</H1>
       </Col>
       <Col xl="4" lg="4" md="4" sm="4">
         <img src={image} alt={name} />
